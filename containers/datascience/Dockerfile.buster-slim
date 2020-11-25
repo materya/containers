@@ -1,0 +1,53 @@
+ARG PYTHON_VER=3.8
+
+FROM python:${PYTHON_VER}-slim-buster
+
+LABEL maintainer "Sylver <sylver@materya.io>"
+LABEL org.opencontainers.image.source https://github.com/materya/containers
+
+ARG TALIB_VER=0.4.0
+
+ENV TALIB_MIRROR="https://downloads.sourceforge.net/project/ta-lib"
+ENV TALIB_SRC="${TALIB_MIRROR}/ta-lib/${TALIB_VER}/ta-lib-${TALIB_VER}-src.tar.gz"
+
+ENV BUILD_PACKAGES="\
+  build-essential \
+  curl \
+"
+
+USER root
+
+# PYTHON DATA SCIENCE PACKAGES
+#   * numpy: support for large, multi-dimensional arrays and matrices
+#   * matplotlib: plotting library for Python and its numerical mathematics extension NumPy.
+#   * scipy: library used for scientific computing and technical computing
+#   * scikit-learn: machine learning library integrates with NumPy and SciPy
+#   * pandas: library providing high-performance, easy-to-use data structures and data analysis tools
+#   * nltk: suite of libraries and programs for symbolic and statistical natural language processing for English
+ENV PYTHON_MODULES="\
+  matplotlib \
+  numpy \
+  pandas \
+  scipy \
+"
+
+RUN pip install --upgrade pip \
+  && pip install --no-cache-dir $PYTHON_MODULES
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends $BUILD_PACKAGES \
+  && cd /tmp \
+  && curl -L -o ta-lib-src.tar.gz $TALIB_SRC \
+  && tar -zxf ta-lib-src.tar.gz \
+  && cd ta-lib \
+  && ./configure --prefix=/usr \
+  && make \
+  && make install \
+  && pip install --no-cache-dir ta-lib \
+  && apt-get remove -y --purge $BUILD_PACKAGES \
+  && apt-get autoremove -y \
+  && apt-get clean \
+  && rm -rf /tmp/* /var/lib/apt/lists/*
+
+RUN useradd -m cloud
+USER cloud

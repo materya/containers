@@ -1,0 +1,106 @@
+ARG PYTHON_VER=3.8
+
+# Don't use alpine for python images :
+# https://pythonspeed.com/articles/alpine-docker-python/
+FROM python:${PYTHON_VER}-alpine
+
+LABEL maintainer "Sylver <sylver@materya.io>"
+LABEL org.opencontainers.image.source https://github.com/materya/containers
+
+ARG TALIB_VER=0.4.0
+
+ENV ALPINE_MIRROR="https://mirrors.edge.kernel.org/alpine/edge/"
+ENV TALIB_MIRROR="https://downloads.sourceforge.net/project/ta-lib"
+
+ENV ALPINE_TESTING="${ALPINE_MIRROR}/testing"
+ENV ALPINE_COMMUNITY="${ALPINE_MIRROR}/community"
+ENV TALIB_SRC="${TALIB_MIRROR}/ta-lib/${TALIB_VER}/ta-lib-${TALIB_VER}-src.tar.gz"
+
+# SOFTWARE PACKAGES
+#   * musl: standard C library
+#   * lib6-compat: compatibility libraries for glibc
+#   * linux-headers: commonly needed, and an unusual package name from Alpine.
+#   * build-base: used so we include the basic development packages (gcc)
+#   * bash: so we can access /bin/bash
+#   * git: to ease up clones of repos
+#   * ca-certificates: for SSL verification during Pip and easy_install
+#   * freetype: library used to render text onto bitmaps, and provides support font-related operations
+#   * libgfortran: contains a Fortran shared library, needed to run Fortran
+#   * libgcc: contains shared code that would be inefficient to duplicate every time as well as auxiliary helper routines and runtime support
+#   * libstdc++: The GNU Standard C++ Library. This package contains an additional runtime library for C++ programs built with the GNU compiler
+#   * openblas: open source implementation of the BLAS(Basic Linear Algebra Subprograms) API with many hand-crafted optimizations for specific processor types
+#   * tcl: scripting language
+#   * tk: GUI toolkit for the Tcl scripting language
+#   * libssl1.0: SSL shared libraries
+# ENV PACKAGES="\
+#   dumb-init \
+#   musl \
+#   libc6-compat \
+#   linux-headers \
+#   build-base \
+#   bash \
+#   git \
+#   ca-certificates \
+#   freetype \
+#   libgfortran \
+#   libgcc \
+#   libstdc++ \
+#   openblas \
+#   tcl \
+#   tk \
+#   libssl1.0 \
+# "
+
+# PYTHON DATA SCIENCE PACKAGES
+#   * numpy: support for large, multi-dimensional arrays and matrices
+#   * matplotlib: plotting library for Python and its numerical mathematics extension NumPy.
+#   * scipy: library used for scientific computing and technical computing
+#   * scikit-learn: machine learning library integrates with NumPy and SciPy
+#   * pandas: library providing high-performance, easy-to-use data structures and data analysis tools
+#   * nltk: suite of libraries and programs for symbolic and statistical natural language processing for English
+ENV PYTHON_MODULES="\
+  matplotlib \
+  numpy \
+  pandas \
+  scipy \
+"
+
+ENV BUILD_PACKAGES="\
+  build-base \
+  curl \
+  freetype-dev \
+  gcc \
+  gfortran \
+  gzip \
+  libpng-dev \
+  openblas-dev \
+  pkgconfig \
+  python3-dev \
+  tar \
+"
+
+RUN echo $ALPINE_TESTING >> /etc/apk/repositories && \
+  echo $ALPINE_COMMUNITY >> /etc/apk/repositories && \
+  apk update && \
+  apk upgrade && \
+  apk add --no-cache py-pip
+
+USER root
+
+RUN pip install --upgrade pip \
+  && pip install --no-cache-dir $PYTHON_MODULES
+
+RUN apk add --virtual .build-runtime $BUILD_PACKAGES \
+  && cd /tmp \
+  && curl -L -o ta-lib-src.tar.gz $TALIB_SRC \
+  && tar -zxf ta-lib-src.tar.gz \
+  && cd ta-lib \
+  && ./configure --prefix=/usr \
+  && make \
+  && make install \
+  && pip install --no-cache-dir ta-lib \
+  && apk del .build-runtime \
+  && rm -rf /tmp/* /var/cache/apk/*
+
+RUN adduser -D cloud
+USER cloud

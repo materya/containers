@@ -1,0 +1,21 @@
+# Exclude All
+**
+.DS_Store
+
+# Explicit includes
+!.github/
+!.github/**
+!.vscode/
+!.vscode/**
+!containers/
+!containers/**
+!doc/
+!doc/**
+!.editorconfig
+!.env.defaults
+!.gitattributes
+!.gitignore
+!CHANGELOG.md
+!LICENSE
+!Makefile
+!README.md
