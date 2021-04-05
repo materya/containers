@@ -1,0 +1,55 @@
+#!make
+SHELL = /bin/sh
+
+VERSIONS = ./Versions
+include $(VERSIONS)
+
+DC = docker
+REGISTRY = ghcr.io/materya
+REPOSITORY = https://github.com/materya/containers
+
+branches := stable staging devel
+name := wine
+
+.PHONY: all
+all: $(branches)
+
+.PHONY: $(branches)
+$(branches): image = $(REGISTRY)/$(name)-$@
+$(branches): version = $(shell echo $($@_version) | sed 's/~.*//')
+$(branches):
+	@echo "Building $(image):$(version) ..."
+	@$(DC) build --pull \
+		--build-arg CREATED_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
+		--build-arg REFNAME=$(version) \
+		--build-arg REPOSITORY=$(REPOSITORY) \
+		--build-arg WINE_BRANCH=$@ \
+		--build-arg WINE_VERSION=$($@_version) \
+		--cache-from $(image):latest \
+		-t $(image):$(version) \
+		-t $(image):latest \
+		-f Dockerfile \
+		.
+
+.PHONY: clean-branch
+clean-branch: BRANCH := stable
+clean-branch: image := $(REGISTRY)/$(name)-$(BRANCH)
+clean-branch:
+	@$(DC) rmi -f \
+		$$($(DC) images --filter=reference="$(image)" --format="{{.ID}}") \
+		2>/dev/null \
+		|| echo "No image found matching \"$(image)\""
+
+.PHONY: clean
+clean:
+	@for branch in $(branches) ; do $(MAKE) clean-branch BRANCH=$$branch ; done
+
+.PHONY: push-branch
+push-branch: BRANCH := stable
+push-branch: image := $(REGISTRY)/$(name)-$(BRANCH)
+push-branch:
+	@$(DC) push -a $(image)
+
+.PHONY: push
+push:
+	@for branch in $(branches) ; do $(MAKE) push-branch BRANCH=$$branch ; done
