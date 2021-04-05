@@ -7,8 +7,8 @@
 !.github/**
 !.vscode/
 !.vscode/**
-!containers/
-!containers/**
+!specs
+!specs/**
 !doc/
 !doc/**
 !.editorconfig
