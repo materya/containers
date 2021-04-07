@@ -8,13 +8,12 @@
 
 A compilation of tailor-made containers for our own purposes but probably useful for a lot of other projects, ready to use.
 
-All containers are using an alpine base image to optimize size & security.
-
 ## Containers
 
 | Name | Description |
 |-|-|
-| **[Datascience](/containers/datascience/README.md)** | Datascience & Technical Analysis dedicated python environment |
+| **[Datascience](/specs/datascience/README.md)** | Datascience & Technical Analysis dedicated python environment |
+| **[Wine](/specs/wine/README.md)** | Basic Lightweight Wine base container |
 
 
 ## License
