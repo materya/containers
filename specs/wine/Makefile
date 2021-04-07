@@ -1,6 +1,8 @@
 #!make
 SHELL = /bin/sh
 
+export DOCKER_BUILDKIT = 1
+
 VERSIONS = ./Versions
 include $(VERSIONS)
 
@@ -26,8 +28,8 @@ $(branches):
 		--build-arg WINE_BRANCH=$@ \
 		--build-arg WINE_VERSION=$($@_version) \
 		--cache-from $(image):latest \
-		-t $(image):$(version) \
 		-t $(image):latest \
+		-t $(image):$(version) \
 		-f Dockerfile \
 		.
 
