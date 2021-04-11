@@ -1,8 +1,8 @@
 # Wine
 
-A basic lightweight Wine base container.
+A basic lightweight Wine headless base container.
 
-Based on [`buster-slim` image](debian-container-url) and includes [`winetricks`](winetricks-url).
+Based on [`buster-slim` image](debian-container-url), with `Xvfb` and includes [`winetricks`](winetricks-url).
 
 ## Available versions
 
