@@ -13,11 +13,13 @@ Based on [`buster-slim` image](debian-container-url), with `Xvfb` and includes [
 
 ### wine-staging
 
+**[6.6](https://github.com/orgs/materya/packages/container/wine-staging/6.6)**,
 **[6.5](https://github.com/orgs/materya/packages/container/wine-staging/6.5)**,
 **[latest](https://github.com/orgs/materya/packages/container/wine-staging/latest)**
 
 ### wine-devel
 
+**[6.6](https://github.com/orgs/materya/packages/container/wine-devel/6.6)**,
 **[6.5](https://github.com/orgs/materya/packages/container/wine-devel/6.5)**,
 **[latest](https://github.com/orgs/materya/packages/container/wine-devel/latest)**
 
