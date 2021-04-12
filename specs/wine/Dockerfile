@@ -23,6 +23,9 @@ ARG WINE_VERSION
 ARG WINE_PACKAGES="\
   libfaudio0 \
   winbind \
+  wine-${WINE_BRANCH}-amd64=${WINE_VERSION} \
+  wine-${WINE_BRANCH}-i386=${WINE_VERSION} \
+  wine-${WINE_BRANCH}=${WINE_VERSION} \
   winehq-${WINE_BRANCH}=${WINE_VERSION} \
 "
 RUN dpkg --add-architecture i386 \
