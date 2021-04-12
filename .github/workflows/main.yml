@@ -25,6 +25,7 @@ jobs:
       with:
         # TODO: find a way to wildcard that
         filters: |
+          pywine: 'specs/pywine/**'
           wine: 'specs/wine/**'
 
   build_and_push:

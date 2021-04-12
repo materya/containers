@@ -12,8 +12,9 @@ A compilation of tailor-made containers for our own purposes but probably useful
 
 | Name | Description |
 |-|-|
-| **[Datascience](/specs/datascience/README.md)** | Datascience & Technical Analysis dedicated python environment |
-| **[Wine](/specs/wine/README.md)** | Basic Lightweight Wine base container |
+| **[Datascience](/specs/datascience/README.md)** | Datascience & Technical Analysis dedicated python container |
+| **[PyWine](/specs/pywine/README.md)** | Wine headless container with a ready to use prefix with Python |
+| **[Wine](/specs/wine/README.md)** | Basic Lightweight Wine headless base container |
 
 
 ## License
