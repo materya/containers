@@ -7,7 +7,8 @@ VERSIONS = ./Versions
 include $(VERSIONS)
 
 DC = docker
-REGISTRY = ghcr.io/materya
+ORGANIZATION = materya
+REGISTRY = ghcr.io
 REPOSITORY = https://github.com/materya/containers
 
 branches := stable staging devel
@@ -17,7 +18,7 @@ name := wine
 all: $(branches)
 
 .PHONY: $(branches)
-$(branches): image = $(REGISTRY)/$(name)-$@
+$(branches): image = $(ORGANIZATION)/$(name)-$@
 $(branches): version = $(shell echo $($@_version) | sed 's/~.*//')
 $(branches):
 	@echo "Building $(image):$(version) ..."
@@ -30,6 +31,8 @@ $(branches):
 		--cache-from $(image):latest \
 		-t $(image):latest \
 		-t $(image):$(version) \
+		-t $(REGISTRY)/$(image):latest \
+		-t $(REGISTRY)/$(image):$(version) \
 		-f Dockerfile \
 		.
 
@@ -48,9 +51,10 @@ clean:
 
 .PHONY: push-branch
 push-branch: BRANCH := stable
-push-branch: image := $(REGISTRY)/$(name)-$(BRANCH)
+push-branch: image := $(ORGANIZATION)/$(name)-$(BRANCH)
 push-branch:
 	@$(DC) push -a $(image)
+	@$(DC) push -a $(REGISTRY)/$(image)
 
 .PHONY: push
 push:

@@ -7,7 +7,8 @@ VERSIONS = ./Versions
 include $(VERSIONS)
 
 DC = docker
-REGISTRY = ghcr.io/materya
+ORGANIZATION = materya
+REGISTRY = ghcr.io
 REPOSITORY = https://github.com/materya/containers
 BASE_IMAGE = ghcr.io/materya/wine-stable
 
@@ -18,7 +19,7 @@ name := pywine
 all: $(branches)
 
 .PHONY: $(branches)
-$(branches): image = $(REGISTRY)/$(name)-$@
+$(branches): image = $(ORGANIZATION)/$(name)-$@
 $(branches): version = $($@_version)
 $(branches):
 	@echo "Building $(image):$(version) ..."
@@ -31,6 +32,8 @@ $(branches):
 		--build-arg PY_VERSION=$(version) \
 		-t $(image):latest \
 		-t $(image):$(version) \
+		-t $(REGISTRY)/$(image):latest \
+		-t $(REGISTRY)/$(image):$(version) \
 		-f Dockerfile \
 		.
 
@@ -49,9 +52,10 @@ clean:
 
 .PHONY: push-branch
 push-branch: BRANCH := 3.9
-push-branch: image := $(REGISTRY)/$(name)-$(BRANCH)
+push-branch: image := $(ORGANIZATION)/$(name)-$(BRANCH)
 push-branch:
 	@$(DC) push -a $(image)
+	@$(DC) push -a $(REGISTRY)/$(image)
 
 .PHONY: push
 push:
