@@ -17,13 +17,13 @@ Wine default env configuration are :
 
 ## Available versions
 
-[image-size-badge]: https://img.shields.io/docker/image-size/materya/wine-mt/latest?style=flat-square
-[image-url]: https://github.com/orgs/materya/packages/container/wine-mt/latest
+[image-size-badge]: https://img.shields.io/docker/image-size/materya/metatrader/latest?style=flat-square
+[image-url]: https://github.com/orgs/materya/packages/container/metatrader/latest
 [![Size][image-size-badge]][image-url]
 
-**[4](https://github.com/orgs/materya/packages/container/wine-mt/4)**,
-**[5](https://github.com/orgs/materya/packages/container/wine-mt/5)**,
-**[latest](https://github.com/orgs/materya/packages/container/wine-mt/latest)**
+**[4](https://github.com/orgs/materya/packages/container/metatrader/4)**,
+**[5](https://github.com/orgs/materya/packages/container/metatrader/5)**,
+**[latest](https://github.com/orgs/materya/packages/container/metatrader/latest)**
 
 ## License
 
