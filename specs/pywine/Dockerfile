@@ -5,7 +5,7 @@ FROM ${BASE_IMAGE}
 USER root
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV WINEDEBUG -all
+ENV WINEDEBUG fixme-all
 ENV WINEPREFIX /opt/pywine
 
 ARG APT_FLAGS="-y -qq --no-install-recommends --no-install-suggests"
@@ -45,6 +45,9 @@ RUN curl -sL ${PY_INSTALL_URL} | install /dev/stdin python.exe \
     wine ./python.exe /quiet Include_doc=0 InstallAllUsers=1 PrependPath=1; \
     wineserver -w" \
   && rm python.exe
+RUN xvfb-run sh -c "\
+  wine python -m pip install --upgrade pip; \
+  wineserver -w"
 
 USER root
 COPY ./scripts/entrypoint.sh /opt/entrypoint
@@ -52,7 +55,7 @@ RUN chmod a+x /opt/entrypoint
 ENTRYPOINT ["/opt/entrypoint"]
 WORKDIR /home/${USER}
 RUN rm -rf ${WORKDIR}
-
+ENV WINEDEBUG -all
 USER ${USER}
 
 ARG CREATED_DATE
@@ -67,7 +70,7 @@ LABEL org.opencontainers.image.licenses="GPL-3.0-only"
 LABEL org.opencontainers.image.ref.name=${REFNAME}
 LABEL org.opencontainers.image.revision=
 LABEL org.opencontainers.image.source=${REPOSITORY}
-LABEL org.opencontainers.image.title="Headless Wine with Python installed."
+LABEL org.opencontainers.image.title="Headless Wine prefix for Python."
 LABEL org.opencontainers.image.url="${REPOSITORY}/specs/pywine"
 LABEL org.opencontainers.image.vendor="Materya"
 LABEL org.opencontainers.image.version=${PY_VERSION}
