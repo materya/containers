@@ -25,6 +25,7 @@ jobs:
       with:
         # TODO: find a way to wildcard that
         filters: |
+          metatrader: 'specs/metatrader/**'
           pywine: 'specs/pywine/**'
           wine: 'specs/wine/**'
 
