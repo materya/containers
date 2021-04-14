@@ -5,7 +5,7 @@
 
 Wine headless container with a ready to use prefix with Python.
 
-Based on [`wine-stable` image](base-image-url).
+Based on [`wine-stable` image][base-image-url].
 
 Wine default env configuration are :
 
