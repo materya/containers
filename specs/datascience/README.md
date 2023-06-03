@@ -1,6 +1,6 @@
 # Datascience
 
-As its name stand, an out-of-the-box ready environment for datascience projects in python, including all the mandatory libs & toolkits to do just that.
+As its name stands, an out-of-the-box ready environment for datascience projects in python, including all the mandatory libs & toolkits to do just that.
 
 ## Available versions
 
@@ -26,6 +26,6 @@ As its name stand, an out-of-the-box ready environment for datascience projects 
 > 1. Make your builds much slower.
 > 2. Make your images bigger.
 > 3. Waste your time.
-> 4. On occassion, introduce obscure runtime bugs.
+> 4. On occasion, introduce obscure runtime bugs.
 
 See this [pertinent article](https://pythonspeed.com/articles/alpine-docker-python/) on the matter.

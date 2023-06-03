@@ -1,4 +1,4 @@
-#!make
+#!/usr/bin/env make
 SHELL = /bin/sh
 
 export DOCKER_BUILDKIT = 1
@@ -6,7 +6,7 @@ export DOCKER_BUILDKIT = 1
 VERSIONS = ./Versions
 include $(VERSIONS)
 
-DC = docker
+DOCKER = /usr/bin/env docker
 ORGANIZATION = materya
 REGISTRY = ghcr.io
 REPOSITORY = https://github.com/materya/containers
@@ -22,7 +22,7 @@ $(branches): image = $(ORGANIZATION)/$(name)-$@
 $(branches): version = $(shell echo $($@_version) | sed 's/~.*//')
 $(branches):
 	@echo "Building $(image):$(version) ..."
-	@$(DC) build --pull \
+	@$(DOCKER) build --pull \
 		--build-arg CREATED_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
 		--build-arg REFNAME=$(version) \
 		--build-arg REPOSITORY=$(REPOSITORY) \
@@ -40,8 +40,8 @@ $(branches):
 clean-branch: BRANCH := stable
 clean-branch: image := $(REGISTRY)/$(name)-$(BRANCH)
 clean-branch:
-	@$(DC) rmi -f \
-		$$($(DC) images --filter=reference="$(image)" --format="{{.ID}}") \
+	@$(DOCKER) rmi -f \
+		$$($(DOCKER) images --filter=reference="$(image)" --format="{{.ID}}") \
 		2>/dev/null \
 		|| echo "No image found matching \"$(image)\""
 
@@ -53,8 +53,8 @@ clean:
 push-branch: BRANCH := stable
 push-branch: image := $(ORGANIZATION)/$(name)-$(BRANCH)
 push-branch:
-	@$(DC) push -a $(image)
-	@$(DC) push -a $(REGISTRY)/$(image)
+	@$(DOCKER) push -a $(image)
+	@$(DOCKER) push -a $(REGISTRY)/$(image)
 
 .PHONY: push
 push:

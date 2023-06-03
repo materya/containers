@@ -1,4 +1,5 @@
-#!make
+#!/usr/bin/env make
+
 SHELL = /bin/sh
 
 %: | specs/%

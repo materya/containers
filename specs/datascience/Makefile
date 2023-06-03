@@ -1,4 +1,4 @@
-#!make
+#!/usr/bin/env make
 
 # Activate Docker BuildKit
 DOCKER_BUILDKIT = 1
@@ -6,7 +6,7 @@ DOCKER_BUILDKIT = 1
 COMPOSE_DOCKER_CLI_BUILD = 1
 
 # COMMANDS
-DOCKER = docker
+DOCKER = /usr/bin/env docker
 
 CONFIGFILE = .config
 ifneq (,$(wildcard $(CONFIGFILE)))
@@ -19,7 +19,7 @@ IMAGE = $(REGISTRY)/$(NAME)
 VERSION = $(PYTHON_VER)-$(IMAGE_BASE)
 
 .PHONY: all
-all: build push
+all: build
 
 .PHONY: help
 help:

@@ -1,9 +1,9 @@
-#!make
+#!/usr/bin/env make
 SHELL = /bin/sh
 
 export DOCKER_BUILDKIT = 1
 
-DC = docker
+DOCKER = /usr/bin/env docker
 ORGANIZATION = materya
 REGISTRY = ghcr.io
 REPOSITORY = https://github.com/materya/containers
@@ -20,7 +20,7 @@ $(branches): image = $(ORGANIZATION)/$(name)
 $(branches): version = $@
 $(branches):
 	@echo "Building $(image):$(version) ..."
-	@$(DC) build --pull \
+	@$(DOCKER) build --pull \
 		--cache-from $(image):latest \
 		--build-arg CREATED_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
 		--build-arg REFNAME=$(version) \
@@ -37,13 +37,13 @@ $(branches):
 .PHONY: clean
 clean: image := $(REGISTRY)/$(name)
 clean:
-	@$(DC) rmi -f \
-		$$($(DC) images --filter=reference="$(image)" --format="{{.ID}}") \
+	@$(DOCKER) rmi -f \
+		$$($(DOCKER) images --filter=reference="$(image)" --format="{{.ID}}") \
 		2>/dev/null \
 		|| echo "No image found matching \"$(image)\""
 
 .PHONY: push
 push: image := $(ORGANIZATION)/$(name)
 push:
-	@$(DC) push -a $(image)
-	@$(DC) push -a $(REGISTRY)/$(image)
+	@$(DOCKER) push -a $(image)
+	@$(DOCKER) push -a $(REGISTRY)/$(image)

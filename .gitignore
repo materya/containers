@@ -1,16 +1,12 @@
 # Exclude All
-**
-.DS_Store
+/*
 
 # Explicit includes
-!.github/
-!.github/**
-!.vscode/
-!.vscode/**
+!.github
+!.vscode
 !specs
-!specs/**
-!doc/
-!doc/**
+!doc
+
 !.editorconfig
 !.env.defaults
 !.gitattributes
@@ -19,3 +15,7 @@
 !LICENSE
 !Makefile
 !README.md
+
+# Artifacts
+.DS_Store
+.vscode/*.log
