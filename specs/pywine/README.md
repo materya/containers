@@ -1,7 +1,7 @@
 # PyWine
 
 [![License][license-image]][license-url]
-![Maintenance](https://img.shields.io/maintenance/yes/2021?style=flat-square)
+![Maintenance](https://img.shields.io/maintenance/yes/2023?style=flat-square)
 
 Wine headless container with a ready to use prefix with Python.
 

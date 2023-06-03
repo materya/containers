@@ -5,7 +5,7 @@
 # Materya Containers
 
 [![License][license-image]][license-url]
-![Maintenance](https://img.shields.io/maintenance/yes/2021?style=flat-square)
+![Maintenance](https://img.shields.io/maintenance/yes/2023?style=flat-square)
 [![Actions Status][action-image]][action-url]
 
 A compilation of tailor-made containers for our own purposes but probably useful for a lot of other projects, ready to use.

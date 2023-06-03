@@ -1,7 +1,7 @@
 # Wine
 
 [![License][license-image]][license-url]
-![Maintenance](https://img.shields.io/maintenance/yes/2021?style=flat-square)
+![Maintenance](https://img.shields.io/maintenance/yes/2023?style=flat-square)
 
 A basic lightweight Wine headless base container.
 
