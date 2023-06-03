@@ -26,5 +26,5 @@ A compilation of tailor-made containers for our own purposes but probably useful
 
 [license-image]: https://img.shields.io/github/license/materya/containers?style=flat-square
 [license-url]: LICENSE
-[action-image]: https://img.shields.io/github/workflow/status/materya/containers/Build%20&%20Push?label=Build%20%26%20Push&logo=github&style=flat-square
+[action-image]: https://img.shields.io/github/actions/workflow/status/materya/containers/build.yml?branch=main&style=flat-square
 [action-url]: https://github.com/materya/containers/actions
