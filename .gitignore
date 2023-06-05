@@ -4,8 +4,9 @@
 # Explicit includes
 !.github
 !.vscode
-!specs
 !doc
+!make
+!specs
 
 !.editorconfig
 !.env.defaults

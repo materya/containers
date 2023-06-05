@@ -1,21 +1,18 @@
 #!/usr/bin/env make
 
-# Activate Docker BuildKit
-DOCKER_BUILDKIT = 1
-# Using BuildKit in compose
-COMPOSE_DOCKER_CLI_BUILD = 1
+SHELL = /usr/bin/env sh
 
-# COMMANDS
+include ../../make/env.mk
+
 DOCKER = /usr/bin/env docker
 
-CONFIGFILE = .config
-ifneq (,$(wildcard $(CONFIGFILE)))
-	include $(CONFIGFILE)
-	export $(shell sed 's/=.*//' $(CONFIGFILE))
-endif
+NAME=datascience
 
-# VARS
-IMAGE = $(REGISTRY)/$(NAME)
+IMAGE_BASE = buster-slim
+PYTHON_VER = 3.8
+TALIB_VER = 0.4.0
+
+IMAGE_REPOSITORY = $(REGISTRY)/$(ORG)/$(NAME)
 VERSION = $(PYTHON_VER)-$(IMAGE_BASE)
 
 .PHONY: all
@@ -40,14 +37,14 @@ build:
 	@$(DOCKER) build --pull \
 		--build-arg PYTHON_VER=$(PYTHON_VER) \
 		--build-arg TALIB_VER=$(TALIB_VER) \
-		--cache-from $(IMAGE):latest \
-		--cache-from $(IMAGE):$(VERSION) \
+		--cache-from $(IMAGE_REPOSITORY):latest \
+		--cache-from $(IMAGE_REPOSITORY):$(VERSION) \
 		--build-arg BUILDKIT_INLINE_CACHE=1 \
-		-t $(IMAGE):$(VERSION) \
-		-t $(IMAGE):latest \
+		-t $(IMAGE_REPOSITORY):$(VERSION) \
+		-t $(IMAGE_REPOSITORY):latest \
 		-f Dockerfile.$(IMAGE_BASE) \
 		.
 
 .PHONY: push
 push:
-	@$(DOCKER) push -a $(IMAGE)
+	@$(DOCKER) push -a $(IMAGE_REPOSITORY)

@@ -1,49 +1,43 @@
 #!/usr/bin/env make
-SHELL = /bin/sh
 
-export DOCKER_BUILDKIT = 1
+SHELL = /usr/bin/env sh
+
+include ../../make/env.mk
 
 DOCKER = /usr/bin/env docker
-ORGANIZATION = materya
-REGISTRY = ghcr.io
-REPOSITORY = https://github.com/materya/containers
-BASE_IMAGE = ghcr.io/materya/pywine-3.8
 
 branches := 4 5
 name := metatrader
+
+IMAGE_REPOSITORY = $(REGISTRY)/$(ORG)/$(name)
+BASE_IMAGE = $(REGISTRY)/$(ORG)/pywine-3.8
 
 .PHONY: all
 all: $(branches)
 
 .PHONY: $(branches)
-$(branches): image = $(ORGANIZATION)/$(name)
 $(branches): version = $@
 $(branches):
-	@echo "Building $(image):$(version) ..."
+	@echo "Building $(IMAGE_REPOSITORY):$(version) ..."
 	@$(DOCKER) build --pull \
-		--cache-from $(image):latest \
+		--cache-from $(IMAGE_REPOSITORY):latest \
 		--build-arg CREATED_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
 		--build-arg REFNAME=$(version) \
-		--build-arg REPOSITORY=$(REPOSITORY) \
+		--build-arg REPOSITORY=$(CODE_REPOSITORY) \
 		--build-arg BASE_IMAGE=$(BASE_IMAGE) \
 		--build-arg MT_VERSION=$(version) \
-		-t $(image):latest \
-		-t $(image):$(version) \
-		-t $(REGISTRY)/$(image):latest \
-		-t $(REGISTRY)/$(image):$(version) \
+		-t $(IMAGE_REPOSITORY):latest \
+		-t $(IMAGE_REPOSITORY):$(version) \
 		-f Dockerfile \
 		.
 
 .PHONY: clean
-clean: image := $(REGISTRY)/$(name)
 clean:
 	@$(DOCKER) rmi -f \
-		$$($(DOCKER) images --filter=reference="$(image)" --format="{{.ID}}") \
+		$$($(DOCKER) images --filter=reference="$(IMAGE_REPOSITORY)" --format="{{.ID}}") \
 		2>/dev/null \
-		|| echo "No image found matching \"$(image)\""
+		|| echo "No image found matching \"$(IMAGE_REPOSITORY)\""
 
 .PHONY: push
-push: image := $(ORGANIZATION)/$(name)
 push:
-	@$(DOCKER) push -a $(image)
-	@$(DOCKER) push -a $(REGISTRY)/$(image)
+	@$(DOCKER) push -a $(IMAGE_REPOSITORY)

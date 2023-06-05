@@ -1,0 +1,10 @@
+{
+  "editor.insertSpaces": false,
+  "editor.tabSize": 2,
+  "files.associations": {
+    ".env.defaults": "shellscript",
+  },
+  "material-icon-theme.files.associations": {
+    ".env.defaults": "tune",
+  },
+}

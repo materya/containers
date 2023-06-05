@@ -1,9 +1,11 @@
 #!/usr/bin/env make
 
-SHELL = /bin/sh
+SHELL = /usr/bin/env sh
 
-%: | specs/%
+include make/env.mk
+
+%: | .env specs/%
 	@$(MAKE) -C specs/$@
 
 specs/%:
-	@echo "No spec found for container \"$*\"." && false
+	$(error No spec found for container "$*")

@@ -16,9 +16,9 @@ A compilation of tailor-made containers for our own purposes but probably useful
 |-|-|
 | **[Datascience](/specs/datascience)** | Datascience & Technical Analysis dedicated python container |
 | **[Metatrader](/specs/metatrader)** | Wine headless container with MetaTrader® and Python included in the default prefix |
+| **[PhpDev](/specs/phpdev)** | A lightweight base image for PHP projects development |
 | **[PyWine](/specs/pywine)** | Wine headless container with Python included in the default prefix |
 | **[Wine](/specs/wine)** | Basic Lightweight Wine headless base container |
-
 
 ## License
 
