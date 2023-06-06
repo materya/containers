@@ -1,12 +1,10 @@
 name: Build & Push
 
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:
     inputs:
-      images:
-        description: 'Images to build'
+      image:
+        description: 'Image to build'
         required: true
         type: choice
         options:
@@ -17,42 +15,11 @@ on:
           - wine
 
 jobs:
-  changes:
-    runs-on: ubuntu-latest
-    outputs:
-      trigger_build: ${{ steps.trigger.outputs.specs }}
-      containers: ${{ steps.filter_specs.outputs.changes }}
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Detect changes
-      uses: dorny/paths-filter@v2
-      id: trigger
-      with:
-        filters: |
-          specs: 'specs/**'
-    - name: Filter specs
-      uses: dorny/paths-filter@v2
-      id: filter_specs
-      with:
-        # TODO: find a way to wildcard that
-        filters: |
-          datascience: 'specs/datascience/**'
-          metatrader: 'specs/metatrader/**'
-          phpdev: 'specs/phpdev/**'
-          pywine: 'specs/pywine/**'
-          wine: 'specs/wine/**'
-
   build_and_push:
-    needs: changes
-    if: |
-      needs.changes.outputs.trigger_build == 'true'
-      || github.event_name == 'workflow_dispatch'
     strategy:
       matrix:
         container:
-          - ${{ fromJSON(needs.changes.outputs.containers) }}
-          - ${{ github.event.inputs.images }}
+          - ${{ github.event.inputs.image }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
