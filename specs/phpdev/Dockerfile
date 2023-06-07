@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:1
 
 # Use the official Alpine PHP image as base.
-ARG PHP_VERSION=8.1
-ARG BASE_IMAGE
+ARG PHP_MINOR_VERSION=8.1
+ARG BASE_IMAGE=library/php:${PHP_MINOR_VERSION}-cli-alpine
 FROM ${BASE_IMAGE} AS phpdev
 
 #------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ ARG PECL_PACKAGES="\
 ARG PECL_CACHE=/tmp/pecl
 
 RUN --mount=type=cache,mode=0755,sharing=locked,id=apk-cache,target=/var/cache/apk \
-  --mount=type=cache,mode=0755,sharing=locked,id=pecl-cache-${PHP_VERSION},target=${PECL_CACHE} \
+  --mount=type=cache,mode=0755,sharing=locked,id=pecl-cache-${PHP_MINOR_VERSION},target=${PECL_CACHE} \
 <<EOT
   set -e -x
 
@@ -96,7 +96,10 @@ ENTRYPOINT ["/opt/docker/entrypoint.sh"]
 #------------------------------------------------------------------------------
 # Labels
 
+ARG BASE_DIGEST
+ARG BASE_IMAGE
 ARG CREATED_DATE
+ARG PHP_MINOR_VERSION
 ARG REPOSITORY
 ARG REVISION
 ARG URL
@@ -110,8 +113,8 @@ LABEL org.opencontainers.image.version=${PHP_VERSION}
 LABEL org.opencontainers.image.revision=${REVISION}
 LABEL org.opencontainers.image.vendor="Materya"
 LABEL org.opencontainers.image.licenses="GPL-3.0-only"
-LABEL org.opencontainers.image.ref.name=${REPOSITORY}:${PHP_VERSION}
-LABEL org.opencontainers.image.title="PHP ${PHP_VERSION} Development Container"
+LABEL org.opencontainers.image.ref.name=${REPOSITORY}:${PHP_MINOR_VERSION}
+LABEL org.opencontainers.image.title="PHP ${PHP_MINOR_VERSION} Development Container"
 LABEL org.opencontainers.image.description="A lightweight base image for PHP projects development."
 LABEL org.opencontainers.image.base.digest=${BASE_DIGEST}
 LABEL org.opencontainers.image.base.name=${BASE_IMAGE}
