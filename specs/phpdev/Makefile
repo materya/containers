@@ -16,7 +16,8 @@ php_xdebug_versions := \
 	7.3=3.1.6 \
 	7.4=3.1.6 \
 	8.0=3.2.1 \
-	8.1=3.2.1
+	8.1=3.2.1 \
+	8.2=3.2.1
 
 php_versions := $(foreach ver,$(php_xdebug_versions),$(firstword $(subst =, ,$(ver))))
 
