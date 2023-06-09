@@ -54,6 +54,7 @@ $(php_versions):
 		$(if $(CI),--cache-from=type=gha$(comma)scope=$(version)-$(GITHUB_REF_NAME),) \
 		$(if $(CI),--cache-to=type=gha$(comma)mode=max$(comma)scope=$(version)-$(GITHUB_REF_NAME),) \
 		--cache-from=type=registry,ref=$(image) \
+		$(if $(NO_CACHE),--no-cache,) \
 		--build-arg BUILDKIT_INLINE_CACHE=1 \
 		--build-arg BASE_IMAGE=$(BASE_IMAGE):$(version)-cli-alpine \
 		--build-arg BASE_DIGEST=$(call get_digest,$(version)-cli-alpine) \

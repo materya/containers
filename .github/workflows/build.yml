@@ -13,6 +13,11 @@ on:
           - phpdev
           - pywine
           - wine
+      invalid_cache:
+        description: 'Invalid the cache for this build'
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   build_and_push:
@@ -44,7 +49,8 @@ jobs:
       -
         name: Build
         run: |
-          make -C specs/${{ inputs.image }}
+            make -C specs/${{ inputs.image }} \
+              ${{ inputs.invalid_cache && 'NO_CACHE=1' }}
       -
         name: Push
         run: |
