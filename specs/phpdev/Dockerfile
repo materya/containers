@@ -33,6 +33,7 @@ EOT
 
 # https://xdebug.org/docs/compat#versions
 ARG XDEBUG_VERSION=3.1.6
+ENV XDEBUG_VERSION=${XDEBUG_VERSION}
 ARG PECL_PACKAGES="\
   xdebug-${XDEBUG_VERSION} \
   pcov \
@@ -68,11 +69,6 @@ RUN --mount=type=cache,mode=0755,sharing=locked,id=apk-cache,target=/var/cache/a
 EOT
 
 #------------------------------------------------------------------------------
-# Install default xdebug.ini
-
-COPY ./docker/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
-
-#------------------------------------------------------------------------------
 # Create a dedicated user
 
 ARG USER=phpdev
@@ -83,6 +79,7 @@ ARG GID=1000
 RUN <<EOT
   addgroup -g ${GID} ${USER}
   adduser -D -s /bin/bash -u ${UID} -G ${USER} -G www-data ${USER}
+  touch /var/log/xdebug.log && chown ${USER}:www-data /var/log/xdebug.log
 EOT
 
 WORKDIR /home/${USER}
@@ -90,7 +87,7 @@ WORKDIR /home/${USER}
 #------------------------------------------------------------------------------
 # Entrypoint
 
-COPY ./docker/entrypoint.sh /opt/docker/
+COPY ./docker/* /opt/docker/
 ENTRYPOINT ["/opt/docker/entrypoint.sh"]
 
 #------------------------------------------------------------------------------
