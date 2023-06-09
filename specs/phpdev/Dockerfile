@@ -5,6 +5,8 @@ ARG PHP_MINOR_VERSION=8.1
 ARG BASE_IMAGE=library/php:${PHP_MINOR_VERSION}-cli-alpine
 FROM ${BASE_IMAGE} AS phpdev
 
+ARG PHP_MINOR_VERSION
+
 #------------------------------------------------------------------------------
 # Install Composer
 
@@ -96,7 +98,6 @@ ENTRYPOINT ["/opt/docker/entrypoint.sh"]
 ARG BASE_DIGEST
 ARG BASE_IMAGE
 ARG CREATED_DATE
-ARG PHP_MINOR_VERSION
 ARG REPOSITORY
 ARG REVISION
 ARG URL
