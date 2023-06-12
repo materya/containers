@@ -47,10 +47,15 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       -
+        name: Set cache invalidation flag
+        id: set_invalid_cache_flag
+        run: |
+          echo "invalid_cache=$(if ${{ inputs.invalid_cache }} ; then echo 'NO_CACHE=1'; fi)" >> $GITHUB_OUTPUT
+      -
         name: Build
         run: |
-            make -C specs/${{ inputs.image }} \
-              ${{ inputs.invalid_cache && 'NO_CACHE=1' }}
+          make -C specs/${{ inputs.image }} \
+            ${{ steps.set_invalid_cache_flag.outputs.invalid_cache }}
       -
         name: Push
         run: |
