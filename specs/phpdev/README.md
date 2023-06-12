@@ -8,35 +8,29 @@ It can also serve as a solid base for more complex images.
 
 ## Available versions
 
-[7.1-size-badge]: https://img.shields.io/docker/image-size/materya/phpdev/7.1?style=flat-square
-[7.1-url]: https://github.com/orgs/materya/packages/container/phpdev/7.1
-[7.2-size-badge]: https://img.shields.io/docker/image-size/materya/phpdev/7.2?style=flat-square
-[7.2-url]: https://github.com/orgs/materya/packages/container/phpdev/7.2
-[7.3-size-badge]: https://img.shields.io/docker/image-size/materya/phpdev/7.3?style=flat-square
-[7.3-url]: https://github.com/orgs/materya/packages/container/phpdev/7.3
-[7.4-size-badge]: https://img.shields.io/docker/image-size/materya/phpdev/7.4?style=flat-square
-[7.4-url]: https://github.com/orgs/materya/packages/container/phpdev/7.4
-[8.0-size-badge]: https://img.shields.io/docker/image-size/materya/phpdev/8.0?style=flat-square
-[8.0-url]: https://github.com/orgs/materya/packages/container/phpdev/8.0
-[8.1-size-badge]: https://img.shields.io/docker/image-size/materya/phpdev/8.1?style=flat-square
-[8.1-url]: https://github.com/orgs/materya/packages/container/phpdev/8.1
-[latest-size-badge]: https://img.shields.io/docker/image-size/materya/phpdev/latest?style=flat-square
-[latest-url]: https://github.com/orgs/materya/packages/container/phpdev/latest
-
-| Version | Description | Badges|
-|-|-|-|
-| **[7.1](https://github.com/orgs/materya/packages/container/phpdev/7.1)** | [PHP 7.1](https://www.php.net/releases/7_1_0.php) | [![Size][7.1-size-badge]][7.1-url] |
-| **[7.2](https://github.com/orgs/materya/packages/container/phpdev/7.2)** | [PHP 7.2](https://www.php.net/releases/7_2_0.php) | [![Size][7.2-size-badge]][7.2-url] |
-| **[7.3](https://github.com/orgs/materya/packages/container/phpdev/7.3)** | [PHP 7.3](https://www.php.net/releases/7_3_0.php) | [![Size][7.3-size-badge]][7.3-url] |
-| **[7.4](https://github.com/orgs/materya/packages/container/phpdev/7.4)** | [PHP 7.4](https://www.php.net/releases/7_4_0.php) | [![Size][7.4-size-badge]][7.4-url] |
-| **[8.0](https://github.com/orgs/materya/packages/container/phpdev/8.0)** | [PHP 8.0](https://www.php.net/releases/8_0_0.php) | [![Size][8.0-size-badge]][8.0-url] |
-| **[8.1](https://github.com/orgs/materya/packages/container/phpdev/8.1)** | [PHP 8.1](https://www.php.net/releases/8_1_0.php) | [![Size][8.1-size-badge]][8.1-url] |
-| **[latest](https://github.com/orgs/materya/packages/container/phpdev/latest)** | [PHP 8.1](https://www.php.net/releases/8_1_0.php) | [![Size][latest-size-badge]][latest-url] |
+| Version | Description |
+|-|-|
+| **[7.1](https://github.com/orgs/materya/packages/container/phpdev)** | [PHP 7.1](https://www.php.net/releases/7_1_0.php) |
+| **[7.2](https://github.com/orgs/materya/packages/container/phpdev)** | [PHP 7.2](https://www.php.net/releases/7_2_0.php) |
+| **[7.3](https://github.com/orgs/materya/packages/container/phpdev)** | [PHP 7.3](https://www.php.net/releases/7_3_0.php) |
+| **[7.4](https://github.com/orgs/materya/packages/container/phpdev)** | [PHP 7.4](https://www.php.net/releases/7_4_0.php) |
+| **[8.0](https://github.com/orgs/materya/packages/container/phpdev)** | [PHP 8.0](https://www.php.net/releases/8_0_0.php) |
+| **[8.1](https://github.com/orgs/materya/packages/container/phpdev)** | [PHP 8.1](https://www.php.net/releases/8_1_0.php) |
+| **[8.2](https://github.com/orgs/materya/packages/container/phpdev)** | [PHP 8.2](https://www.php.net/releases/8_2_0.php) |
+| **[latest](https://github.com/orgs/materya/packages/container/phpdev/latest)** | [PHP 8.2](https://www.php.net/releases/8_2_0.php) |
 
 ## Preinstalled Extensions
 
 * **XDebug**: A PHP extension for debugging and profiling PHP applications.
 * **PCov**: A PHP extension for code coverage analysis during testing.
+
+## Exposed Env variables
+
+| Variable Name | Value | Detail |
+|-|-|-|
+| `CONTAINER_USER_NAME` | `phpdev` | The user running the container |
+| `CONTAINER_USER_UID` | `1000` | The user id of the user running the container |
+| `CONTAINER_USER_GID` | `1000` | The group id of the user running the container |
 
 ## Configuration
 

@@ -20,5 +20,10 @@ else
   sed -i "s/xdebug.client_port=.*/xdebug.client_port=${XDEBUG_PORT}/" ${XDEBUG_INI}
 fi
 
+if ! id -u "$CONTAINER_USER_NAME" >/dev/null 2>&1; then
+  echo "CONTAINER_USER_NAME env must be set to an existing user name"
+  exit 1
+fi
+
 # Then, drop privileges and run your application
-exec su-exec ${DOCKER_USER} "$@"
+exec su-exec ${CONTAINER_USER_NAME} "$@"

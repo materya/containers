@@ -74,7 +74,6 @@ EOT
 # Create a dedicated user
 
 ARG USER=phpdev
-ENV DOCKER_USER=${USER}
 ARG UID=1000
 ARG GID=1000
 
@@ -85,6 +84,11 @@ RUN <<EOT
 EOT
 
 WORKDIR /home/${USER}
+
+# Export user's related variables to the env for use by other containers
+ENV CONTAINER_USER_NAME=${USER}
+ENV CONTAINER_USER_UID=${UID}
+ENV CONTAINER_USER_GID=${GID}
 
 #------------------------------------------------------------------------------
 # Entrypoint
