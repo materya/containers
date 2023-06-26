@@ -79,7 +79,7 @@ ARG GID=1000
 
 RUN <<EOT
   addgroup -g ${GID} ${USER}
-  adduser -D -s /bin/bash -u ${UID} -G ${USER} -G www-data ${USER}
+  adduser -D -s /bin/ash -u ${UID} -G ${USER} -G www-data ${USER}
   touch /var/log/xdebug.log && chown ${USER}:www-data /var/log/xdebug.log
 EOT
 
